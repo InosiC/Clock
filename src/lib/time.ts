@@ -85,6 +85,53 @@ export function getTimeInZone(date: Date, ianaTimeZone: string): TimeParts {
   }
 }
 
+/** Result of formatting a time for a digital display. */
+export interface DigitalTime {
+  /** The full clock string, e.g. "09:05:03" or "9:05:03 AM". */
+  text: string
+  /** Zero-padded HH:MM:SS portion (24h), e.g. "09:05:03". */
+  time: string
+  /** "AM" / "PM" when 12-hour formatting is used, otherwise undefined. */
+  period?: 'AM' | 'PM'
+}
+
+/** Left-pads a number with zeros to (at least) two digits. */
+function pad2(value: number): string {
+  return String(value).padStart(2, '0')
+}
+
+/**
+ * Formats a time-of-day for a digital clock display.
+ *
+ * Minutes and seconds are always zero-padded to two digits. When `hour12` is
+ * true the hour is shown in 1–12 form with an `AM`/`PM` period; otherwise the
+ * hour is zero-padded to two digits in 24-hour form.
+ *
+ * @param time   The hours/minutes/seconds to format.
+ * @param hour12 When true, use 12-hour formatting with an AM/PM period.
+ */
+export function formatDigital(
+  { hours, minutes, seconds }: TimeParts,
+  hour12 = false,
+): DigitalTime {
+  const mm = pad2(minutes)
+  const ss = pad2(seconds)
+  const time = `${pad2(hours)}:${mm}:${ss}`
+
+  if (hour12) {
+    const period: 'AM' | 'PM' = hours < 12 ? 'AM' : 'PM'
+    // 0 -> 12, 13 -> 1, 12 -> 12.
+    const hour12Value = hours % 12 === 0 ? 12 : hours % 12
+    return {
+      text: `${hour12Value}:${mm}:${ss} ${period}`,
+      time,
+      period,
+    }
+  }
+
+  return { text: time, time }
+}
+
 /**
  * Converts a time-of-day into degrees for analog clock hands.
  *
