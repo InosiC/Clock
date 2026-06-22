@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   getTimeInZone,
   toAnalogAngles,
+  formatDigital,
   LOTR_LOCATIONS,
   type TimeParts,
 } from './time'
@@ -71,6 +72,53 @@ describe('toAnalogAngles', () => {
         expect(angle).toBeLessThan(360)
       }
     }
+  })
+})
+
+describe('formatDigital', () => {
+  it('formats 24-hour time with zero-padding by default', () => {
+    expect(formatDigital({ hours: 9, minutes: 5, seconds: 3 })).toEqual({
+      text: '09:05:03',
+      time: '09:05:03',
+    })
+  })
+
+  it('zero-pads single-digit hours, minutes and seconds', () => {
+    expect(formatDigital({ hours: 1, minutes: 2, seconds: 9 }).time).toBe('01:02:09')
+  })
+
+  it('formats midnight and just-before-midnight in 24-hour mode', () => {
+    expect(formatDigital({ hours: 0, minutes: 0, seconds: 0 }).time).toBe('00:00:00')
+    expect(formatDigital({ hours: 23, minutes: 59, seconds: 59 }).time).toBe('23:59:59')
+  })
+
+  it('omits the period in 24-hour mode', () => {
+    expect(formatDigital({ hours: 13, minutes: 0, seconds: 0 }).period).toBeUndefined()
+  })
+
+  it('formats 12-hour time with an AM period before noon', () => {
+    expect(formatDigital({ hours: 9, minutes: 5, seconds: 3 }, true)).toEqual({
+      text: '9:05:03 AM',
+      time: '09:05:03',
+      period: 'AM',
+    })
+  })
+
+  it('formats 12-hour time with a PM period in the afternoon', () => {
+    expect(formatDigital({ hours: 15, minutes: 7, seconds: 0 }, true)).toEqual({
+      text: '3:07:00 PM',
+      time: '15:07:00',
+      period: 'PM',
+    })
+  })
+
+  it('renders midnight as 12 AM and noon as 12 PM', () => {
+    expect(formatDigital({ hours: 0, minutes: 0, seconds: 0 }, true).text).toBe('12:00:00 AM')
+    expect(formatDigital({ hours: 12, minutes: 0, seconds: 0 }, true).text).toBe('12:00:00 PM')
+  })
+
+  it('still zero-pads minutes and seconds in 12-hour mode', () => {
+    expect(formatDigital({ hours: 1, minutes: 4, seconds: 6 }, true).text).toBe('1:04:06 AM')
   })
 })
 
