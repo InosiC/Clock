@@ -3,8 +3,11 @@ import { describe, it, expect } from 'vitest'
 import App from './App'
 
 describe('App', () => {
-  it('renders without crashing', () => {
+  it('renders the primary clock panel with both clocks', () => {
     render(<App />)
-    expect(screen.getByRole('heading', { name: /get started/i })).toBeInTheDocument()
+
+    expect(screen.getByTestId('clock-panel')).toBeInTheDocument()
+    expect(screen.getByTestId('analog-clock')).toBeInTheDocument()
+    expect(screen.getByTestId('digital-clock')).toBeInTheDocument()
   })
 })
