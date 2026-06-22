@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Placeholder "Map of Middle-earth" background asset.
+
+  ASSET LICENSING NOTE:
+  This is an ORIGINAL, hand-authored placeholder illustration created for this
+  project. It is intentionally a stylised, generic fantasy map and does NOT
+  reproduce any copyrighted Tolkien / "The Lord of the Rings" artwork or the
+  trademarked "Middle-earth" cartography. It is safe to commit and redistribute.
+  Before shipping to production, replace this with a properly licensed map
+  asset (e.g. a public-domain / CC-licensed map or one you are licensed to use)
+  and update this licensing note accordingly.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stylised map of Middle-earth">
+  <defs>
+    <radialGradient id="parchment" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#e9d8b0"/>
+      <stop offset="60%" stop-color="#d8c293"/>
+      <stop offset="100%" stop-color="#b89a63"/>
+    </radialGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9fb6a3"/>
+      <stop offset="100%" stop-color="#7c9a85"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Parchment base -->
+  <rect width="1600" height="1000" fill="url(#parchment)"/>
+
+  <!-- Western sea -->
+  <rect width="360" height="1000" fill="url(#sea)" opacity="0.55"/>
+  <path d="M360 0 Q420 250 360 500 Q300 750 360 1000 L300 1000 L300 0 Z" fill="#7c9a85" opacity="0.4"/>
+
+  <!-- Coastline -->
+  <path d="M360 0 Q440 200 380 420 Q330 620 410 820 Q450 920 420 1000"
+        fill="none" stroke="#6b5733" stroke-width="4" opacity="0.6"/>
+
+  <!-- Mountain ranges (Misty Mountains-esque) -->
+  <g fill="none" stroke="#5b4a2c" stroke-width="5" opacity="0.7">
+    <path d="M720 200 l40 -60 l40 60 l50 -80 l50 80 l45 -70 l45 70"/>
+    <path d="M760 360 l45 -70 l45 70 l55 -90 l55 90"/>
+    <path d="M980 520 l40 -60 l40 60 l50 -80 l50 80"/>
+  </g>
+
+  <!-- Forest (Mirkwood-esque) -->
+  <g fill="#5d6b3a" opacity="0.55">
+    <circle cx="1120" cy="300" r="26"/>
+    <circle cx="1160" cy="330" r="30"/>
+    <circle cx="1200" cy="300" r="24"/>
+    <circle cx="1150" cy="270" r="22"/>
+    <circle cx="1210" cy="350" r="26"/>
+  </g>
+
+  <!-- Rivers -->
+  <path d="M520 120 Q620 360 540 620 Q500 800 600 980"
+        fill="none" stroke="#5b7fa6" stroke-width="6" opacity="0.55"/>
+
+  <!-- Compass rose -->
+  <g transform="translate(1380 820)" stroke="#6b5733" fill="#6b5733" opacity="0.7">
+    <polygon points="0,-70 14,0 0,70 -14,0" fill="#8a6d3b"/>
+    <polygon points="-70,0 0,14 70,0 0,-14" fill="#a98b52"/>
+    <text x="-7" y="-80" font-family="serif" font-size="28">N</text>
+  </g>
+
+  <!-- Subtle border frame -->
+  <rect x="20" y="20" width="1560" height="960" fill="none" stroke="#6b5733" stroke-width="6" opacity="0.5"/>
+</svg>

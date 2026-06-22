@@ -1,3 +1,43 @@
+/*
+ * Full-viewport Map of Middle-earth background sitting behind the clock.
+ * The image is imported in App.tsx and applied inline via `background-image`;
+ * the rules below handle cover/centering and a subtle dark overlay so the
+ * bright, Mickey-themed clock stays legible against the busy parchment map.
+ */
+.lotr-background {
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.lotr-overlay {
+  position: absolute;
+  inset: 0;
+  /* Subtle dark vignette: darker toward the edges, lighter in the centre
+     where the clock sits, preserving contrast without hiding the map. */
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.55) 70%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep the clock content above the overlay. */
+.lotr-background > #center {
+  position: relative;
+  z-index: 1;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
